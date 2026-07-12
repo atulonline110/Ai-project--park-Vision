@@ -12,7 +12,9 @@ from database import (
     vehicle_exit,
     get_all_slots_status,
     get_vehicle_history,
-    get_analytics_data
+    get_analytics_data,
+    register_user,
+    login_user
 )
 
 @st.cache_resource
@@ -29,16 +31,27 @@ if "logged_in" not in st.session_state:
 
 if not st.session_state.logged_in:
     st.title("🚗 Smart Parking AI")
-    st.subheader("Admin Login Portal")
+
+    option = st.radio("Select", ["Login", "Register"])
+
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
 
-    if st.button("Login", use_container_width=True):
-        if username == "admin" and password == "1234":
-            st.session_state.logged_in = True
-            st.rerun()
-        else:
-            st.error("Invalid Username or Password")
+    if option == "Register":
+        if st.button("Register", use_container_width=True):
+            if register_user(username, password):
+                st.success("Registration Successful! Please Login.")
+            else:
+                st.error("Username already exists.")
+
+    if option == "Login":
+        if st.button("Login", use_container_width=True):
+            user = login_user(username, password)
+            if user:
+                st.session_state.logged_in = True
+                st.rerun()
+            else:
+                st.error("Invalid Username or Password")
 else:
     st.sidebar.title("Navigation Panel")
     page = st.sidebar.radio(
