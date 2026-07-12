@@ -1,7 +1,7 @@
-streamlit
-opencv-python
-numpy
-pandas
-Pillow
-ultralytics
-sqlite3
+streamlit ==1.59.1
+opencv-python ==5.0.0.93
+numpy ==2.5.1
+pandas==3.0.3
+Pillow==12.3.0
+ultralytics ==8.4.92
+
