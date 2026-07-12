@@ -162,3 +162,16 @@ def get_analytics_data():
         revenue_distribution = cursor.fetchall()
         
         return type_counts, revenue_distribution
+
+def register_user(username, password):
+    with sqlite3.connect(DATABASE_NAME) as conn:
+        cursor = conn.cursor()
+        try:
+            cursor.execute(
+                "INSERT INTO users(username, password) VALUES(?, ?)",
+                (username, password)
+            )
+            conn.commit()
+            return True
+        except sqlite3.IntegrityError:
+            return False
