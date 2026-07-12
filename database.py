@@ -170,6 +170,13 @@ def register_user(username, password):
             cursor.execute(
                 "INSERT INTO users(username, password) VALUES(?, ?)",
                 (username, password)
+            )
+            conn.commit()
+            return True
+        except sqlite3.IntegrityError:
+            return False
+
+
 def login_user(username, password):
     with sqlite3.connect(DATABASE_NAME) as conn:
         cursor = conn.cursor()
@@ -178,8 +185,3 @@ def login_user(username, password):
             (username, password)
         )
         return cursor.fetchone()
-            )
-            conn.commit()
-            return True
-        except sqlite3.IntegrityError:
-            return False
