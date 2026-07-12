@@ -23,6 +23,14 @@ def create_database():
             status TEXT
         )
         """)
+        #user table 
+        cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+           username TEXT UNIQUE,
+           password TEXT
+   )
+    """)
 
         # Slots reference table
         cursor.execute("""
